@@ -1,6 +1,7 @@
 *** Settings ***
 Library    Application.py
 Library    Test.py
+# Library    control.py
 Suite Setup    Start Application    start_parameter
 Suite Teardown    Stop Application
 Test Setup    Init Application
@@ -20,4 +21,5 @@ Test Subtraction
     Test Subtraction    178    1
     Test Subtraction    0    7
     Test Subtraction    -6    -5
-    
+Test Failure
+    Test Fail    "reason unknown"

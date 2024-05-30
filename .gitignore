@@ -1,0 +1,6 @@
+__pycache__/
+env/
+src/robot_test/__pycache__/*
+.html
+.xml
+src/robot_test/__pycache__/control.cpython-312.pyc
