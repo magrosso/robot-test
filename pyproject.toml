@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "robot-test"
+dynamic = ["version"]
+description = ''
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "matteo", email = "matteo@delgrosso.de" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = ["robotframework==6.1.1", "rpaframework-windows==7.5.1",]
+
+[project.urls]
+Documentation = "https://github.com/matteo/robot-test#readme"
+Issues = "https://github.com/matteo/robot-test/issues"
+Source = "https://github.com/matteo/robot-test"
+
+[tool.hatch.envs.default]
+path="env"
+
+[tool.hatch.version]
+path = "src/robot_test/__about__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/robot_test tests}"
+
+[tool.coverage.run]
+source_pkgs = ["robot_test", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/robot_test/__about__.py",
+]
+
+[tool.coverage.paths]
+robot_test = ["src/robot_test", "*/robot-test/src/robot_test"]
+tests = ["tests", "*/robot-test/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
