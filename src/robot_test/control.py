@@ -1,13 +1,15 @@
 import logging
 
-# from RPA.Windows.keywords import ActionKeywords as action
-# from RPA.Windows.keywords import ElementKeywords as elem
-# from RPA.Windows.keywords import WindowKeywords as win
-from RPA.Windows.keywords.window import WindowsElement
-# import RPA.Windows.keywords.window as win
-# from RPA.Windows.keywords import LocatorKeywords as loc
-# from RPA.core.windows.locators import WindowsElement
 
+# import RPA.Windows.keywords.ActionKeywords as action
+# import RPA.Windows.keywords.ElementKeywords as elem
+# import RPA.Windows.keywords.WindowKeywords as win
+# import RPA.Windows.keywords.LocatorKeywords as loc
+# from RPA.Windows.keywords.window import WindowKeywords
+
+# import RPA.Windows.keywords.window
+
+from RPA.core.windows.locators import WindowsElement
 from RPA.Windows import Windows
 
 win = Windows()
@@ -15,7 +17,11 @@ win = Windows()
 logger = logging.getLogger(f"{__name__} Logger")
 
 
-def set_global_timeout(timeout: float):
+def print_tree():
+    win.print_tree()
+
+
+def set_global_timeout(timeout: str):
     win.set_global_timeout(timeout=timeout)
 
 
