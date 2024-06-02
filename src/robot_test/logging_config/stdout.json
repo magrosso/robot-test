@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "detail": {
+      "format": "%(asctime)s|%(levelname)s|%(name)s|%(funcName)s|%(lineno)d: %(message)s"},
+    "simple": {
+      "format": "%(levelname)s: %(message)s"
+    }
+  },
+  "handlers": {
+    "stdout": {
+      "class": "logging.StreamHandler",
+      "formatter": "detail",
+      "stream": "ext://sys.stdout"
+    }
+  },
+  "loggers": {
+    "root": {
+      "level": "DEBUG",
+      "handlers": [
+        "stdout"
+      ]
+    }
+  }
+}

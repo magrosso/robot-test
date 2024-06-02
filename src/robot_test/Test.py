@@ -10,16 +10,35 @@ class Display(Enum):
     ENGLISH = auto()
 
 
+class Operator(Enum):
+    NEGATE = "id:negateButton type:button"  # +/-
+    PLUS = "id:plusButton type:button"  # +
+    MINUS = "id:minusButton type:button"  # -
+    EQUAL = "id:equalButton type:button"  # =
+    MULTIPLY = "id:multiplyButton type:button"  # *
+    DIVIDE = "id:divideButton type:button"  # /
+    SQUARE = "id:xpower2Button type:button"  # x^2
+    SQUARE_ROOT = "id:squareRootButton type:button"
+    INVERT = "id:invertButton type:button"  # 1/x
+    PERCENT = "id:percentButton type:button"  # %
+    BACKSPACE = "id:backSpaceButton type:button"  # <-
+    CLEAR = "id:clearButton type:button"  # C
+    CLEAR_ENTRY = "id:clearEntryButton type:button"  # CE
+    DECIMAL_SEPARATOR = "id:decimalSeparatorButton type:button"
+    DIGIT = "id:num{}Button type:button"
+    RESULT = "id:CalculatorResults type:Text"
+
+
 def test_addition(num_left: int, num_right: int, exp_result: int) -> None:
     """Addition Test"""
     logger.info(f"{__name__}({num_left}, {num_right})")
-    if not _enter_number(num_left):
+    if not enter_number(num_left):
         raise ValueError
-    control.click(locator="id:plusButton type:button")
-    if not _enter_number(num_right):
+    enter_operator(operator=Operator.PLUS)
+    if not enter_number(num_right):
         raise ValueError
-    control.click(locator="id:equalButton type:button")
-    result: float = _get_result(display=Display.GERMAN)
+    enter_operator(operator=Operator.EQUAL)
+    result: float = get_result(display=Display.GERMAN)
     if result != exp_result:
         raise AssertionError(f"{result} != {exp_result}")
 
@@ -27,13 +46,13 @@ def test_addition(num_left: int, num_right: int, exp_result: int) -> None:
 def test_subtraction(num_left: int, num_right: int, exp_result: int) -> None:
     """Subtraction Test"""
     logger.info(f"{__name__}({num_left}, {num_right})")
-    if not _enter_number(num_left):
+    if not enter_number(num_left):
         raise ValueError
-    control.click(locator="id:minusButton type:button")
-    if not _enter_number(num_right):
+    enter_operator(operator=Operator.MINUS)
+    if not enter_number(num_right):
         raise ValueError
-    control.click(locator="id:equalButton type:button")
-    result: float = _get_result(display=Display.GERMAN)
+    enter_operator(operator=Operator.EQUAL)
+    result: float = get_result(display=Display.GERMAN)
     if result != exp_result:
         raise AssertionError(f"{result} != {exp_result}")
 
@@ -52,13 +71,13 @@ def test_multiplication(num_left: int, num_right: int, exp_result: int) -> None:
         AssertionError: _description_
     """
     logger.info(f"{__name__}({num_left}, {num_right})")
-    if not _enter_number(num_left):
+    if not enter_number(num_left):
         raise ValueError
-    control.click(locator="id:multiplyButton type:button")
-    if not _enter_number(num_right):
+    enter_operator(operator=Operator.MULTIPLY)
+    if not enter_number(num_right):
         raise ValueError
-    control.click(locator="id:equalButton type:button")
-    result: float = _get_result(display=Display.GERMAN)
+    enter_operator(operator=Operator.EQUAL)
+    result: float = get_result(display=Display.GERMAN)
     if result != exp_result:
         raise AssertionError(f"{result} != {exp_result}")
 
@@ -84,18 +103,22 @@ def test_division() -> None:
     )
     for num_left, num_right, exp_result in test_params:
         logger.info(f"{__name__}({num_left}, {num_right})")
-        if not _enter_number(num_left):
+        if not enter_number(num_left):
             raise ValueError
-        control.click(locator="id:divideButton type:button")
-        if not _enter_number(num_right):
+        enter_operator(operator=Operator.DIVIDE)
+        if not enter_number(num_right):
             raise ValueError
-        control.click(locator="id:equalButton type:button")
-        result: float = _get_result(display=Display.GERMAN)
+        enter_operator(operator=Operator.EQUAL)
+        result: float = get_result(display=Display.GERMAN)
         if result != exp_result:
             raise AssertionError(f"{result} != {exp_result}")
 
 
-def _get_result(display: Display) -> float:
+def enter_operator(operator: Operator):
+    control.click(locator=operator.value)
+
+
+def get_result(display: Display) -> float:
     val: str = _get_result_as_string()
     if display == Display.GERMAN:
         thousand_sep = "."
@@ -110,13 +133,13 @@ def _get_result(display: Display) -> float:
 
 def _get_result_as_string() -> str:
     result_display: str = control.get_attribute(
-        locator="id:CalculatorResults", attribute="Name"
+        locator=Operator.RESULT.value, attribute="Name"
     )
-    logger.info(f'Result Display: "{result_display}"')
+    logger.debug(f'Result Display: "{result_display}"')
     return result_display.removeprefix("Display is ")
 
 
-def _enter_number(num: float) -> bool:
+def enter_number(num: float) -> bool:
     try:
         num_str = str(num)
     except ValueError:
@@ -131,12 +154,12 @@ def _enter_number(num: float) -> bool:
 
     for digit in num_str[1 if signed else 0 :]:
         if digit.isdigit():
-            control.click(locator=f"id:num{digit}Button type:button")
+            control.click(locator=Operator.DIGIT.value.format(digit))
         elif digit == decimal_separator:
-            control.click(locator="id:decimalSeparatorButton type:button")
+            enter_operator(operator=Operator.DECIMAL_SEPARATOR)
         else:
             return False
     if signed and number_sign == minus_sign:
-        control.click(locator="id:negateButton type:button")
+        enter_operator(operator=Operator.NEGATE)
 
     return True

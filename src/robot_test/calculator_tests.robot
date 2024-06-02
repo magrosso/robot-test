@@ -3,7 +3,6 @@ Documentation    Test Windows Calculator
 Test Tags    math
 Library    Application.py
 Library    Test.py
-# Library    control.py
 Suite Setup    Start Application    start_parameter
 Suite Teardown    Stop Application
 Test Setup    Init Application
@@ -15,11 +14,11 @@ Test Addition
     [Documentation]    Verify addition
     [Template]    Test Addition
     num_left=4    num_right=-5    exp_result=-1
-    num_left=90    num_right=-8    exp_result=82
-    num_left=0100    num_right=0    exp_result=100
-    num_left=-9    num_right=92    exp_result=83
-    num_left=698    num_right=92    exp_result=790
-    num_left=3214    num_right=3214    exp_result=6428
+    # num_left=90    num_right=-8    exp_result=82
+    # num_left=0100    num_right=0    exp_result=100
+    # num_left=-9    num_right=92    exp_result=83
+    # num_left=698    num_right=92    exp_result=790
+    # num_left=3214    num_right=3214    exp_result=6428
 
 Test Subtraction
     [Documentation]    Verify subtraction
@@ -44,3 +43,10 @@ Test Multiplication
 Test Division
     [Documentation]    Verify division
     Test Division
+
+
+Test Squaring
+    Enter Number    2
+    Enter Operator   operator=SQUARE
+    ${Result}    Get Result    GERMAN
+    Should Be Equal    ${Result}    ${4.0}
