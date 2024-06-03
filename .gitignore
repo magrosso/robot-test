@@ -1,8 +1,8 @@
 __pycache__/
+dist/
 env/
 src/robot_test/__pycache__/*
-src/robot_test/__pycache__/control.cpython-312.pyc
-*.pyi
-log.html
-output.xml
-report.html
+**/*.pyc
+**/*.pyi
+**/*.html
+**/*.xml

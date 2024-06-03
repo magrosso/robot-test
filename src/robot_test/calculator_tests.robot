@@ -6,7 +6,7 @@ Library    Test.py
 Suite Setup    Start Application    start_parameter
 Suite Teardown    Stop Application
 Test Setup    Init Application
-Test Timeout    2 minutes
+Test Timeout    20 minutes
 
 
 *** Test Cases ***

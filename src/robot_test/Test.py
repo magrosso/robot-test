@@ -1,8 +1,6 @@
-import logging
 import control
+from robot.api import logger
 from enum import Enum, auto
-
-logger = logging.getLogger(f"{__name__} Logger")
 
 
 class Display(Enum):

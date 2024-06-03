@@ -1,16 +1,12 @@
 import logging
 
+from robot.api import logger
+
 from RPA.core.windows.locators import WindowsElement
 from RPA.Windows import Windows
 
-import test_logger
-
-test_logger.setup_logging()
-
 win = Windows()
 win.logger.setLevel(logging.WARN)
-
-logger = logging.getLogger(__name__)
 
 
 def print_tree():
