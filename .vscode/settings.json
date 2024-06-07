@@ -8,5 +8,6 @@
         "-v",
     ],
     "robot.variables": {
-    }
+    },
+    "robot.language-server.python": "${workspaceFolder}\\env\\Scripts\\python.exe",
 }

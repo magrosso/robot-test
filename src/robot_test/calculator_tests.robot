@@ -1,9 +1,9 @@
 *** Settings ***
 Documentation    Test Windows Calculator
 Test Tags    math
-Library    Application.py
+Library    robot_test.Application    lang=GERMAN    region=ENGLISH
 Library    Test.py
-Suite Setup    Start Application    start_parameter
+Suite Setup    Start Application 
 Suite Teardown    Stop Application
 Test Setup    Init Application
 Test Timeout    20 minutes
