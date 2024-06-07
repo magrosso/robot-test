@@ -1,8 +1,8 @@
 *** Settings ***
 Documentation    Test Windows Calculator
 Test Tags    math
-Library    robot_test.Application    lang=GERMAN    region=ENGLISH
-Library    Test.py
+Library    robot_test.tests.Application    lang=GERMAN    region=ENGLISH
+Library    robot_test.tests.Test
 Suite Setup    Start Application 
 Suite Teardown    Stop Application
 Test Setup    Init Application
@@ -48,5 +48,5 @@ Test Division
 Test Squaring
     Enter Number    2
     Enter Operator   operator=SQUARE
-    ${Result}    Get Result    GERMAN
+    ${Result}    Get Result
     Should Be Equal    ${Result}    ${4.0}

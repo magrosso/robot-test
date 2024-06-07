@@ -3,7 +3,7 @@ from RPA.core.windows.locators import WindowsElement
 
 from robot.api.deco import library, keyword
 
-from robot_test import control
+from . import control
 
 
 class Language(Enum):

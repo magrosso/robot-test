@@ -35,7 +35,7 @@ Source = "https://github.com/matteo/robot-test"
 path="env"
 
 [tool.hatch.envs.default.env-vars]
-ROBOT_PATH = "./src/robot_test"
+# ROBOT_PATH = "./src/robot_test/tests"
 
 [tool.hatch.version]
 path = "src/robot_test/__about__.py"

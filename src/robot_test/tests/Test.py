@@ -1,9 +1,9 @@
 from robot.api import logger
 from enum import Enum
 
-from robot_test import control
+from . import control
 
-from robot_test.Application import Application, Language, loc_names, LocKeys
+from .Application import Application, Language, loc_names, LocKeys
 
 
 class Operator(Enum):
