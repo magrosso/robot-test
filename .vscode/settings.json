@@ -8,5 +8,6 @@
         "-v",
     ],
     "robot.variables": {
-    }
+    },
+    "robotcode.python": ""
 }
