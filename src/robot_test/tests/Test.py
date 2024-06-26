@@ -1,11 +1,9 @@
-import control
 from robot.api import logger
-from enum import Enum, auto
+from enum import Enum
 
+from . import control
 
-class Display(Enum):
-    GERMAN = auto()
-    ENGLISH = auto()
+from .Application import Application, Language, loc_names, LocKeys
 
 
 class Operator(Enum):
@@ -36,7 +34,7 @@ def test_addition(num_left: int, num_right: int, exp_result: int) -> None:
     if not enter_number(num_right):
         raise ValueError
     enter_operator(operator=Operator.EQUAL)
-    result: float = get_result(display=Display.GERMAN)
+    result: float = get_result()
     if result != exp_result:
         raise AssertionError(f"{result} != {exp_result}")
 
@@ -50,7 +48,7 @@ def test_subtraction(num_left: int, num_right: int, exp_result: int) -> None:
     if not enter_number(num_right):
         raise ValueError
     enter_operator(operator=Operator.EQUAL)
-    result: float = get_result(display=Display.GERMAN)
+    result: float = get_result()
     if result != exp_result:
         raise AssertionError(f"{result} != {exp_result}")
 
@@ -75,7 +73,7 @@ def test_multiplication(num_left: int, num_right: int, exp_result: int) -> None:
     if not enter_number(num_right):
         raise ValueError
     enter_operator(operator=Operator.EQUAL)
-    result: float = get_result(display=Display.GERMAN)
+    result: float = get_result()
     if result != exp_result:
         raise AssertionError(f"{result} != {exp_result}")
 
@@ -107,7 +105,7 @@ def test_division() -> None:
         if not enter_number(num_right):
             raise ValueError
         enter_operator(operator=Operator.EQUAL)
-        result: float = get_result(display=Display.GERMAN)
+        result: float = get_result()
         if result != exp_result:
             raise AssertionError(f"{result} != {exp_result}")
 
@@ -116,25 +114,24 @@ def enter_operator(operator: Operator):
     control.click(locator=operator.value)
 
 
-def get_result(display: Display) -> float:
-    val: str = _get_result_as_string()
-    if display == Display.GERMAN:
-        thousand_sep = "."
-        decimal_sep = ","
-        val = val.replace(thousand_sep, "").replace(decimal_sep, ".")
-    elif display == Display.ENGLISH:
-        thousand_sep = ","
-        val = val.replace(thousand_sep, "")
+def get_result() -> float:
+    val: str = _get_result_as_string(lang=Application.lang)
+    val = val.replace(
+        loc_names[LocKeys.THOUSAND_SEPARATOR][Application.region], ""
+    ).replace(
+        loc_names[LocKeys.DECIMAL_SEPARATOR][Application.region],
+        loc_names[LocKeys.DECIMAL_SEPARATOR][Language.ENGLISH],
+    )
     # remove thousand separator
     return float(val)
 
 
-def _get_result_as_string() -> str:
+def _get_result_as_string(lang: Language) -> str:
     result_display: str = control.get_attribute(
         locator=Operator.RESULT.value, attribute="Name"
     )
     logger.debug(f'Result Display: "{result_display}"')
-    return result_display.removeprefix("Display is ")
+    return result_display.removeprefix(loc_names[LocKeys.DISPLAY][lang].strip())
 
 
 def enter_number(num: float) -> bool:

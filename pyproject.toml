@@ -34,6 +34,9 @@ Source = "https://github.com/matteo/robot-test"
 [tool.hatch.envs.default]
 path="env"
 
+[tool.hatch.envs.default.env-vars]
+# ROBOT_PATH = "./src/robot_test/tests"
+
 [tool.hatch.version]
 path = "src/robot_test/__about__.py"
 
@@ -45,21 +48,3 @@ extra-dependencies = [
 [tool.hatch.envs.types.scripts]
 check = "mypy --install-types --non-interactive {args:src/robot_test tests}"
 
-[tool.coverage.run]
-source_pkgs = ["robot_test", "tests"]
-branch = true
-parallel = true
-omit = [
-  "src/robot_test/__about__.py",
-]
-
-[tool.coverage.paths]
-robot_test = ["src/robot_test", "*/robot-test/src/robot_test"]
-tests = ["tests", "*/robot-test/tests"]
-
-[tool.coverage.report]
-exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
-]
