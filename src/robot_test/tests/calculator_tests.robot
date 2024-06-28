@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation    Test Windows Calculator
 Test Tags    math
-Library    robot_test.tests.Application    lang=GERMAN    region=ENGLISH
+Library    robot_test.tests.Application    lang=ENGLISH    region=GERMAN
 Library    robot_test.tests.Test
 Suite Setup    Start Application 
 Suite Teardown    Stop Application

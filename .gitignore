@@ -6,3 +6,4 @@ src/robot_test/__pycache__/*
 **/*.pyi
 **/*.html
 **/*.xml
+.idea/robot-test.iml
